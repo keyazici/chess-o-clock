@@ -10,7 +10,7 @@ import {
 
 const App = () => {
   const [start, setStart] = useState(false);
-  const [length, setLength] = useState('300');
+  const [length, setLength] = useState(300);
 
   const Settings = () => (
     <View style={styles.container}>
@@ -18,12 +18,13 @@ const App = () => {
         <Text style={styles.text}>Game Length: </Text>
         <TextInput
           style={styles.text}
-          onChangeNumber={e => setLength(e.value)}
+          onChangeText={text => setLength(text)}
           keyboardType="numeric"
           placeholder="300"
         />
       </View>
       <TouchableOpacity style={styles.btn} onPress={() => setStart(!start)}>
+        <Text>{length}</Text>
         <Text style={styles.text}>Start</Text>
       </TouchableOpacity>
     </View>

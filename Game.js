@@ -5,20 +5,31 @@ const Game = ({ length }) => {
   const [turn, setTurn] = useState('White');
   const [remWhite, setRemWhite] = useState(length);
   const [remBlack, setRemBlack] = useState(length);
+  const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
-    turn === 'White'
-      ? remWhite > 0 && setTimeout(() => setRemWhite(remWhite - 1), 1000)
-      : remBlack > 0 && setTimeout(() => setRemBlack(remBlack - 1), 1000);
+    if (turn === 'White' && remWhite > 0) {
+      setTimeout(() => setRemWhite(remWhite - 1), 1000);
+    } else if (turn === 'Black' && remBlack > 0) {
+      setTimeout(() => setRemBlack(remBlack - 1), 1000);
+    } else {
+      setGameOver(true);
+    }
   }, [turn, remWhite, remBlack]);
+
+  useEffect(() => {
+    if (gameOver) {
+      alert('Game over', 'Hope you enjoyed');
+    }
+  }, [gameOver]);
 
   return (
     <View style={styles.container}>
       <Pressable style={styles.container} onPress={() => setTurn('Black')}>
         <View style={[styles.box, styles.white]}>
-          <Text style={[styles.sideText]}>
-            WHITE {'\n'} {remWhite}
-          </Text>
+          <Text style={[styles.sideText]}>WHITE</Text>
+          <Text style={[styles.sideText, styles.timerText]}>{remWhite}</Text>
+          <Text style={[styles.sideText, styles.tipText]}> seconds left</Text>
         </View>
       </Pressable>
       <View style={styles.turnBox}>
@@ -26,9 +37,9 @@ const Game = ({ length }) => {
       </View>
       <Pressable style={styles.container} onPress={() => setTurn('White')}>
         <View style={[styles.box, styles.black]}>
-          <Text style={[styles.sideText]}>
-            BLACK {'\n'} {remBlack}
-          </Text>
+          <Text style={[styles.sideText]}>BLACK</Text>
+          <Text style={[styles.sideText, styles.timerText]}>{remBlack}</Text>
+          <Text style={[styles.sideText, styles.tipText]}> seconds left</Text>
         </View>
       </Pressable>
     </View>
@@ -36,9 +47,7 @@ const Game = ({ length }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
+  container: { flex: 1 },
   box: {
     flex: 1,
     justifyContent: 'center',
@@ -59,13 +68,12 @@ const styles = StyleSheet.create({
     fontFamily: 'monospace',
     fontSize: 24,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
-  white: {
-    backgroundColor: 'antiquewhite',
-  },
-  black: {
-    backgroundColor: 'darkgray',
-  },
+  timerText: { fontWeight: '700', fontSize: 32 },
+  tipText: { fontSize: 18 },
+  white: { backgroundColor: 'antiquewhite' },
+  black: { backgroundColor: 'darkgray' },
 });
 
 export default Game;
