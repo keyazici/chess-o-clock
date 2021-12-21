@@ -10,5 +10,5 @@ Specify game length & Enjoy
 
 ### Note
 
-- Project was a fun approach to learn React Native and Andorid.
+- Project was a fun approach to learn React Native and Android.
 - Feel free to mail me.
